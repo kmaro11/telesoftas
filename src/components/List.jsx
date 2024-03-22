@@ -2,7 +2,7 @@ export function List() {
     return (
         <>
             <div>
-                <div>
+                <div className="flex">
                     <div>
                         name
                     </div>
