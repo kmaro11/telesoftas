@@ -1,15 +1,19 @@
 import { useState } from "react"
-
+import useDebounce from "../utils/UseDebounce"
 
 export function Search({searchItem}) {
     const [searchUsers, setSearchUsers] = useState('')
 
+    const handleSearch = useDebounce((term) => {
+        searchItem(term)
+      }, 200);
+
     const handleInputChange = (e) => {
         setSearchUsers(e.target.value)
-        searchItem(searchUsers)
-        // console.log(searchUsers)
+        if(e.target.value.length > 2 || e.target.value.length === 0) {
+            handleSearch(e.target.value);
+        }
     }
-
 
     return(
         <>

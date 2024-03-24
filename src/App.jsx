@@ -4,6 +4,7 @@ import { ListItem } from './components/ListItem'
 import { Pagination } from './components/Pagination'
 import { Post } from './components/Post'
 import HttpClient from './utils/HttpClient'
+import { Loader } from './components/Loader'
 
 export default function App() {
     const [apiUsers, setApiUsers] = useState([])
@@ -37,8 +38,6 @@ export default function App() {
             error,
         } = await HttpClient(`https://gorest.co.in/public/v1/users/${userId}/posts?page=${page}`);
 
-        console.log(data);
-        
         if(data) {
             setPosts(data.data)
             setPostsMeta(data.meta.pagination)
@@ -72,7 +71,7 @@ export default function App() {
     }
 
     useEffect(() => {
-        fetchUsersData('1')
+        fetchUsersData(1)
     }, [])
 
     return(
@@ -82,18 +81,24 @@ export default function App() {
 
                 <div className="w-full flex flex-col border border-grey rounded-md">
                     <div className="flex px-2 py-5 border-b border-grey">
-                            <div className="w-1/2">
-                                name
-                            </div>
-                            <div className="w-1/2">
-                                Email
-                            </div>
+                        <div className="w-1/2">
+                            name
                         </div>
+                        <div className="w-1/2">
+                            Email
+                        </div>
+                    </div>
                         {
-                            loadingUserData && 'Loading...'
+                            loadingUserData && 
+                            <Loader />
                         }
                         {
-                            !loadingUserData &&
+                            (!loadingUserData && filteredUsers.length === 0) && 
+                            <div className="px-2 py-5 text-center">
+                                 No users found
+                            </div>
+                        }
+                        {
                             <ul>
                                 {
                                     filteredUsers.map((user, index) => {
@@ -106,7 +111,7 @@ export default function App() {
                             
                         }
                         {
-                           (usersMeta && !loadingUserData) &&  
+                           (usersMeta && !loadingUserData && filteredUsers.length > 0) &&  
                             <Pagination meta={usersMeta} changeMeta={fetchUsersData}/>
                         }
                     </div>
@@ -114,14 +119,12 @@ export default function App() {
                         <div className="w-full flex flex-col border border-grey rounded-md">
                             {
                                 loadingPosts &&
-                                <div className="px-2 py-5 text-center">
-                                    Loading Posts...
-                                </div>
+                                <Loader />
                             }
                             <ul>
                                 {
                                     (posts.length === 0  && !loadingPosts) && 
-                                    <li className="px-2 py-5">
+                                    <li className="px-2 py-5 text-center">
                                         No post avalible { selectedUser ? `for ${selectedUser.name}` : ''}
                                     </li>
                                 }   
