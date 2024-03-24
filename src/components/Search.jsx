@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useDebounce from '../utils/UseDebounce';
+import useDebounce from '../hooks/useDebounce';
 
 export function Search({ searchItem }) {
   const [searchUsers, setSearchUsers] = useState('');
@@ -19,16 +19,14 @@ export function Search({ searchItem }) {
   };
 
   return (
-    <>
-      <div className="w-full">
-        <input
-          type="text"
-          placeholder="Search users by typing atleast 3 letters"
-          className="w-full border border-grey p-2"
-          value={searchUsers}
-          onChange={handleInputChange}
-        />
-      </div>
-    </>
+    <div className="w-full">
+      <input
+        type="text"
+        placeholder="Search users by typing atleast 3 letters"
+        className="w-full border border-grey p-2"
+        value={searchUsers}
+        onChange={handleInputChange}
+      />
+    </div>
   );
 }
