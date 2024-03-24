@@ -4,7 +4,6 @@ const useDebounce = (callback, delay) => {
   const timeoutRef = useRef(null);
 
   useEffect(() => {
-
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -25,4 +24,4 @@ const useDebounce = (callback, delay) => {
   return debouncedCallback;
 };
 
-export default useDebounce
+export default useDebounce;

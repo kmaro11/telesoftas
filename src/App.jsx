@@ -21,7 +21,9 @@ export default function App() {
   const fetchUsersData = async (page) => {
     setErrorMessage('');
     setLoadingUserData(true);
-    const { data, error } = await HttpClient(`https://gorest.co.in/public/v1/users?page=${page}`);
+    const { data, error } = await HttpClient(
+      `https://gorest.co.in/public/v1/users?page=${page}`,
+    );
 
     if (data) {
       setApiUsers(data.data);
@@ -38,7 +40,9 @@ export default function App() {
   const fetchUserPosts = async (userId, page) => {
     setErrorMessage('');
     setLoadingPosts(true);
-    const { data, error } = await HttpClient(`https://gorest.co.in/public/v1/users/${userId}/posts?page=${page}`);
+    const { data, error } = await HttpClient(
+      `https://gorest.co.in/public/v1/users/${userId}/posts?page=${page}`,
+    );
 
     if (data) {
       setPosts(data.data);
@@ -56,7 +60,9 @@ export default function App() {
     let filteredItems = [];
 
     if (searchTerm.length) {
-      filteredItems = apiUsers.filter((user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
+      filteredItems = apiUsers.filter((user) =>
+        user.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
     } else {
       filteredItems = [...apiUsers];
     }
@@ -83,7 +89,9 @@ export default function App() {
       <div className="py-20 w-3/4 max-w-3xl flex flex-col justify-center items-center gap-y-10 mx-auto">
         <Search searchItem={searchUser} />
 
-        <div className="px-2 bg-red-600 text-white rounded-md">{errorMessage}</div>
+        <div className="px-2 bg-red-600 text-white rounded-md">
+          {errorMessage}
+        </div>
 
         <div className="w-full flex flex-col border border-grey rounded-md">
           <div className="flex px-2 py-5 border-b border-grey">
@@ -97,7 +105,9 @@ export default function App() {
           {
             <ul>
               {filteredUsers.map((user, index) => {
-                return <ListItem user={user} key={index} selectUser={selectUser} />;
+                return (
+                  <ListItem user={user} key={index} selectUser={selectUser} />
+                );
               })}
             </ul>
           }
@@ -111,7 +121,8 @@ export default function App() {
           <ul>
             {posts.length === 0 && !loadingPosts && (
               <li className="px-2 py-5 text-center">
-                No post avalible {selectedUser ? `for ${selectedUser.name}` : ''}
+                No post avalible{' '}
+                {selectedUser ? `for ${selectedUser.name}` : ''}
               </li>
             )}
             {posts.map((post, index) => {
