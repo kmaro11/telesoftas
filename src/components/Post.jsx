@@ -1,10 +1,12 @@
-export function Post() {
+export function Post({post}) {
     return (
         <>
-            <div className="px-2 py-5">
-                <h2 className="mb-2 text-black font-bold text-xl">Boost your conversion rate</h2>
-                <p className="text-gray-500">Nullam risus blandit ac aliquam justo ipsum. Quam mauris volutpat massa dictumst amet. Sapien tortor lacus arcu.</p>
-            </div>
+            <li className="px-2 py-5">
+                <h2 className="mb-2 text-black font-bold text-xl">
+                    {post.title}
+                </h2>
+                <p className="text-gray-500">{post.body}</p>
+            </li>
         </>
     )
 }

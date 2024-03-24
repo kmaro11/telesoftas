@@ -1,19 +1,19 @@
 import { useState } from "react"
 
 
-export function Search() {
+export function Search({searchItem}) {
     const [searchUsers, setSearchUsers] = useState('')
 
     const handleInputChange = (e) => {
-        const searchItem = e.target.value
-        setSearchUsers(searchItem)
-        console.log(searchItem)
+        setSearchUsers(e.target.value)
+        searchItem(searchUsers)
+        // console.log(searchUsers)
     }
 
 
     return(
         <>
-            <div className="w-3/4">
+            <div className="w-full">
                 <input 
                     type="text"
                     placeholder="Search users by typing atleast 3 letters"
