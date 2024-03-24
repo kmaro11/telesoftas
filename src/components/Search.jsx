@@ -10,7 +10,7 @@ export function Search({ searchItem }) {
 
   const handleInputChange = (e) => {
     setSearchUsers(e.target.value);
-    if (e.target.value.length > 2 || e.target.value.length === 0) {
+    if (e.target.value.length > 2 || e.target.value.length <= searchUsers.length) {
       handleSearch(e.target.value);
     }
   };

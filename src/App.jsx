@@ -7,6 +7,7 @@ import HttpClient from './utils/HttpClient';
 import { Loader } from './components/Loader';
 
 export default function App() {
+  const defaultErrorMessage = 'Something went wrong';
   const [apiUsers, setApiUsers] = useState([]);
   const [filteredUsers, setFilteredList] = useState(apiUsers);
   const [posts, setPosts] = useState([]);
@@ -15,8 +16,10 @@ export default function App() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [loadingUserData, setLoadingUserData] = useState(false);
   const [loadingPosts, setLoadingPosts] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const fetchUsersData = async (page) => {
+    setErrorMessage('');
     setLoadingUserData(true);
     const { data, error } = await HttpClient(`https://gorest.co.in/public/v1/users?page=${page}`);
 
@@ -25,16 +28,25 @@ export default function App() {
       setFilteredList(data.data);
       setUserMeta(data.meta.pagination);
     }
+
+    if (error) {
+      setErrorMessage(defaultErrorMessage);
+    }
     setLoadingUserData(false);
   };
 
   const fetchUserPosts = async (userId, page) => {
+    setErrorMessage('');
     setLoadingPosts(true);
     const { data, error } = await HttpClient(`https://gorest.co.in/public/v1/users/${userId}/posts?page=${page}`);
 
     if (data) {
       setPosts(data.data);
       setPostsMeta(data.meta.pagination);
+    }
+
+    if (error) {
+      setErrorMessage(defaultErrorMessage);
     }
 
     setLoadingPosts(false);
@@ -70,6 +82,8 @@ export default function App() {
     <>
       <div className="py-20 w-3/4 max-w-3xl flex flex-col justify-center items-center gap-y-10 mx-auto">
         <Search searchItem={searchUser} />
+
+        <div className="px-2 bg-red-600 text-white rounded-md">{errorMessage}</div>
 
         <div className="w-full flex flex-col border border-grey rounded-md">
           <div className="flex px-2 py-5 border-b border-grey">
