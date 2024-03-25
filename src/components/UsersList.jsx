@@ -8,6 +8,7 @@ import ErrorMessage from './ErrorMesage';
 export default function UsersList({ searchTerm, setUser }) {
   const [page, setPage] = useState(1);
   const [filteredUsers, setFilteredList] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   const { data, meta, loading, error } = useFetch(`users?page=${page}`);
 
@@ -32,6 +33,7 @@ export default function UsersList({ searchTerm, setUser }) {
 
   const selectUser = (user) => {
     setUser(user);
+    setSelectedUserId(user.id);
   };
 
   const changePage = (page) => {
@@ -55,7 +57,14 @@ export default function UsersList({ searchTerm, setUser }) {
       {filteredUsers && (
         <ul>
           {filteredUsers.map((user, index) => {
-            return <ListItem user={user} key={index} selectUser={selectUser} />;
+            return (
+              <ListItem
+                user={user}
+                key={index}
+                selectUser={selectUser}
+                selectedUserId={selectedUserId}
+              />
+            );
           })}
         </ul>
       )}

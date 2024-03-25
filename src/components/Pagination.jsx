@@ -14,14 +14,14 @@ export function Pagination({ meta, changeMeta }) {
 
       <div className="flex gap-x-2">
         <button
-          className="py-1 px-3 border border-grey rounded-xl"
+          className="py-1 px-3 border border-grey rounded-xl disabled:cursor-not-allowed"
           disabled={meta.page <= 1}
           onClick={previousPage}
         >
           Previous
         </button>
         <button
-          className="py-1 px-3 border border-grey rounded-xl"
+          className="py-1 px-3 border border-grey rounded-xl disabled:cursor-not-allowed"
           disabled={meta.page >= meta.pages}
           onClick={nextPage}
         >
