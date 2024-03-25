@@ -6,7 +6,7 @@ export function ListItem({ user, selectUser, selectedUserId }) {
 
   return (
     <li
-      className={`flex w-full p-2 cursor-pointer ${activeUser}`}
+      className={`flex w-full p-2 cursor-pointer transition-all duration-300 hover:bg-blue-50 ${activeUser}`}
       onClick={() => {
         selectUser(user);
       }}
